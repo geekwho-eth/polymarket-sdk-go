@@ -27,3 +27,23 @@ type GetMarketPriceQuery struct {
 	TokenID string
 	Side    string
 }
+
+/*
+GetMidPointPriceQuery specifies pricing query parameters.
+
+- TokenID: the market token identifier to quote
+*/
+type GetMidPointPriceQuery struct {
+	TokenID string
+}
+
+// GetMidPointPriceOptions holds optional parameters for GetMarketPrice.
+type GetMidPointPriceOptions struct {
+	// TimeoutSeconds overrides per-request timeout if provided.
+	TimeoutSeconds *int32
+}
+
+// MidPointPriceItem corresponds to one token entry in the Price response.
+type MidPointPriceItem struct {
+	Mid float64 `json:"mid,string"`
+}

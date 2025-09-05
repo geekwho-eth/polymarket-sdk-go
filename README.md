@@ -11,7 +11,7 @@ Layers
 - Service:
   - Gamma: Events().ListEvents(), Markets().ListMarkets()
   - Data: Misc().GetLiveVolume()
-  - CLOB: Pricing().GetPrice()
+  - CLOB: Pricing().GetMarketPrice(),Pricing().GetMidPointPrice()
 
 Implemented APIs
 - Gamma
@@ -24,7 +24,8 @@ Implemented APIs
     - [x] [/live-volume](https://docs.polymarket.com/api-reference/misc/get-live-volume-for-an-event) -> GetLiveVolume
 - CLOB
   - Pricing:
-    - [x] [/price](https://docs.polymarket.com/api-reference/pricing/get-market-price) -> GetPrice
+    - [x] [/price](https://docs.polymarket.com/api-reference/pricing/get-market-price) -> GetMarketPrice
+    - [x] [/midpoint](https://docs.polymarket.com/api-reference/pricing/get-midpoint-price) -> GetMidPointPrice
 
 Install
 ```bash
@@ -118,13 +119,13 @@ func main() {
   }
 
   svc := c.ClobService().ClobAPI().Pricing()
-  res, err := svc.GetPrice(
+  res, err := svc.GetMarketPrice(
     context.Background(),
-    &clobpricing.GetPriceQuery{
+    &clobpricing.GetMarketPriceQuery{
       TokenID: "32813337802210923206070576333957167904670667570617189383542552986489903253171",
       Side:    clobpricing.MarketSideSell, // or clobpricing.MarketSideBuy
     },
-    &clobpricing.GetPriceOptions{},
+    &clobpricing.GetMarketPriceOptions{},
   )
   if err != nil {
     panic(err)
