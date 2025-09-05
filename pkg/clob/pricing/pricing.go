@@ -11,9 +11,9 @@ import (
 Service defines CLOB Pricing operations.
 */
 type Service interface {
-	// GetPrice returns the current price for a token on a given side.
+	// GetMarketPrice returns the current price for a token on a given side.
 	// Endpoint: GET /price?token_id=...&side=BUY|SELL
-	GetPrice(ctx context.Context, query *GetPriceQuery, opts *GetPriceOptions) (PriceItem, error)
+	GetMarketPrice(ctx context.Context, query *GetMarketPriceQuery, opts *GetMarketPriceOptions) (PriceItem, error)
 }
 
 type service struct {
@@ -25,12 +25,12 @@ func New(c rest.Client) Service {
 }
 
 /*
-GetPrice implements GET /price with the chainable request style:
+GetMarketPrice implements GET /price with the chainable request style:
 
 	c.ClobService().ClobAPI().Pricing().
-	  GetPrice(ctx, &GetPriceQuery{TokenID: "...", Side: MarketSideBuy}, &GetPriceOptions{...})
+	  GetMarketPrice(ctx, &GetMarketPriceQuery{TokenID: "...", Side: MarketSideBuy}, &GetMarketPriceOptions{...})
 */
-func (s *service) GetPrice(ctx context.Context, query *GetPriceQuery, opts *GetPriceOptions) (result PriceItem, err error) {
+func (s *service) GetMarketPrice(ctx context.Context, query *GetMarketPriceQuery, opts *GetMarketPriceOptions) (result PriceItem, err error) {
 	// timeout
 	var timeout time.Duration
 	if opts != nil && opts.TimeoutSeconds != nil {

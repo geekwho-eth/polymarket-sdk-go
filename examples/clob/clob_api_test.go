@@ -20,10 +20,10 @@ func TestDataAPI_Core_GetHolders(t *testing.T) {
 			So(err, ShouldBeNil)
 
 			svc := c.ClobService().ClobAPI().Pricing()
-			res, err := svc.GetPrice(
+			res, err := svc.GetMarketPrice(
 				context.Background(),
-				&clobpricing.GetPriceQuery{TokenID: tokenID, Side: clobpricing.MarketSideSell},
-				&clobpricing.GetPriceOptions{},
+				&clobpricing.GetMarketPriceQuery{TokenID: tokenID, Side: clobpricing.MarketSideSell},
+				&clobpricing.GetMarketPriceOptions{},
 			)
 			So(err, ShouldBeNil)
 			So(res, ShouldNotBeNil)

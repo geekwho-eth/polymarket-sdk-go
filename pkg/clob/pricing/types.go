@@ -6,8 +6,8 @@ const (
 	MarketSideSell = "SELL"
 )
 
-// GetPriceOptions holds optional parameters for GetPrice.
-type GetPriceOptions struct {
+// GetMarketPriceOptions holds optional parameters for GetMarketPrice.
+type GetMarketPriceOptions struct {
 	// TimeoutSeconds overrides per-request timeout if provided.
 	TimeoutSeconds *int32
 }
@@ -18,12 +18,12 @@ type PriceItem struct {
 }
 
 /*
-GetPriceQuery specifies pricing query parameters.
+GetMarketPriceQuery specifies pricing query parameters.
 
 - TokenID: the market token identifier to quote
 - Side: BUY or SELL (use MarketSideBuy/MarketSideSell)
 */
-type GetPriceQuery struct {
+type GetMarketPriceQuery struct {
 	TokenID string
 	Side    string
 }
