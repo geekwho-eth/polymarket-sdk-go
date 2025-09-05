@@ -20,9 +20,9 @@ func TestDataAPI_Misc_GetLiveVolume_Mock(t *testing.T) {
 		Convey("Background: Call GetLiveVolume", func() {
 			const marketID = 27541
 
-			// Mock server returning the provided JSON for GET /holders?conditionIds=...
+			// Mock server returning the provided JSON for GET /live-volume?conditionIds=...
 			ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-				if r.URL.Path != "/holders" {
+				if r.URL.Path != "/live-volume" {
 					http.NotFound(w, r)
 					return
 				}

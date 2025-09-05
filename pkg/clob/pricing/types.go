@@ -14,7 +14,7 @@ type GetPriceOptions struct {
 
 // PriceItem corresponds to one token entry in the Price response.
 type PriceItem struct {
-	Price string `json:"price"`
+	Price float64 `json:"price,string"`
 }
 
 /*

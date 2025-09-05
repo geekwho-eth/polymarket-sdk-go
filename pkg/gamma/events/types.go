@@ -1,6 +1,9 @@
 package events
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 // EventList is a simplified Polymarket Event model for listing.
 // Fields included are based on the official docs and your provided JSON sample.
@@ -38,21 +41,21 @@ type EventList struct {
 }
 
 type EventMarket struct {
-	ID            string     `json:"id"`
-	Question      string     `json:"question"`
-	ConditionID   string     `json:"conditionId"`
-	Slug          string     `json:"slug"`
-	EndDate       *time.Time `json:"endDate"`
-	StartDate     *time.Time `json:"startDate"`
-	Image         string     `json:"image"`
-	Icon          string     `json:"icon"`
-	Description   string     `json:"description"`
-	Outcomes      string     `json:"outcomes"`
-	OutcomePrices string     `json:"outcomePrices"`
-	Volume        string     `json:"volume"`
-	Active        bool       `json:"active"`
-	Closed        bool       `json:"closed"`
-	//ClobTokenIds  []string   `json:"clobTokenIds"`
+	ID            string       `json:"id"`
+	Question      string       `json:"question"`
+	ConditionID   string       `json:"conditionId"`
+	Slug          string       `json:"slug"`
+	EndDate       *time.Time   `json:"endDate"`
+	StartDate     *time.Time   `json:"startDate"`
+	Image         string       `json:"image"`
+	Icon          string       `json:"icon"`
+	Description   string       `json:"description"`
+	Outcomes      string       `json:"outcomes"`
+	OutcomePrices string       `json:"outcomePrices"`
+	Volume        string       `json:"volume"`
+	Active        bool         `json:"active"`
+	Closed        bool         `json:"closed"`
+	ClobTokenIds  ClobTokenIds `json:"clobTokenIds"`
 }
 
 type EventTag struct {
@@ -84,4 +87,25 @@ type ListEventsOptions struct {
 
 	// TimeoutSeconds overrides per-request timeout if provided.
 	TimeoutSeconds *int32
+}
+
+// ClobTokenIds is a custom type used to handle nested JSON strings
+type ClobTokenIds []string
+
+// UnmarshalJSON implements the json.Unmarshaler interface
+func (c *ClobTokenIds) UnmarshalJSON(b []byte) error {
+	var arr []string
+	if err := json.Unmarshal(b, &arr); err == nil {
+		*c = arr
+		return nil
+	}
+
+	var s string
+	// Step 1: Parse the raw JSON value (a string) into variable s
+	if err := json.Unmarshal(b, &s); err != nil {
+		return err
+	}
+
+	// Step 2: Parse s as a JSON array and unmarshal it into c
+	return json.Unmarshal([]byte(s), c)
 }
